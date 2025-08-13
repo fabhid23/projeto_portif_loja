@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BugFree Shop</title>
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper blue darken-3">
+            <a href="#" class="brand-logo center">BugFree Shop</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><span id="cartTotal" class="white-text" style="margin-right: 20px;">Total: R$ 0.00</span></li>
+                <li><a id="loginButton" class="waves-effect waves-light btn">Login</a></li>
+                <li><a id="logoutButton" class="waves-effect waves-light btn" style="display: none;">Logout</a></li>
+                <li><span id="welcomeMessage" class="white-text" style="display: none; margin-left: 10px;"></span></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <section id="loginSection" class="container" style="display: none;">
+            <div class="row valign-wrapper" style="min-height: calc(100vh - 64px);">
+                <div class="col s12 m6 offset-m3 l4 offset-l4">
+                    <div class="card z-depth-3">
+                        <div class="card-content">
+                            <span class="card-title center-align">Login</span>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">account_circle</i>
+                                    <input type="text" id="username" class="validate">
+                                    <label for="username">Usuário</label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">lock</i>
+                                    <input type="password" id="password" class="validate">
+                                    <label for="password">Senha</label>
+                                </div>
+                            </div>
+                            <p id="loginMessage" class="red-text center-align"></p>
+                        </div>
+                        <div class="card-action center-align">
+                            <button id="loginSubmit" class="btn waves-effect waves-light blue darken-3">Entrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="productManagementSection" class="container" style="display: none;">
+            <div class="row">
+                <div class="col s12 m10 offset-m1">
+                    <div class="card z-depth-2">
+                        <div class="card-content">
+                            <span class="card-title center-align blue-text text-darken-3">Gerenciamento de Produtos</span>
+                            <form id="productForm">
+                                <input type="hidden" id="productId">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">label</i>
+                                    <input type="text" id="productName" class="validate" required>
+                                    <label for="productName">Nome do Produto</label>
+                                </div>
+                                <div class="input-field">
+                                    <i class="material-icons prefix">description</i>
+                                    <input type="text" id="productDescription" class="validate" required>
+                                    <label for="productDescription">Descrição</label>
+                                </div>
+                                <div class="input-field">
+                                    <i class="material-icons prefix">attach_money</i>
+                                    <input type="number" id="productPrice" class="validate" step="0.01" required>
+                                    <label for="productPrice">Preço</label>
+                                </div>
+                                <div class="input-field">
+                                    <i class="material-icons prefix">add_shopping_cart</i>
+                                    <input type="number" id="productQuantity" class="validate" required>
+                                    <label for="productQuantity">Quantidade</label>
+                                </div>
+                                <div class="input-field">
+                                    <i class="material-icons prefix">category</i>
+                                    <select id="productCategory" required>
+                                        <option value="" disabled selected>Selecione uma categoria</option>
+                                    </select>
+                                    <label>Categoria</label>
+                                </div>
+                                <div class="center-align">
+                                    <button type="submit" class="btn waves-effect waves-light blue darken-3">Salvar Produto</button>
+                                    <button type="button" id="cancelEdit" class="btn waves-effect waves-light grey darken-1" style="display: none;">Cancelar Edição</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m10 offset-m1">
+                    <div class="card z-depth-2">
+                        <div class="card-content">
+                            <span class="card-title center-align blue-text text-darken-3">Gerenciamento de Categorias</span>
+                            <form id="categoryForm">
+                                <div class="input-field">
+                                    <i class="material-icons prefix">bookmark</i>
+                                    <input type="text" id="categoryName" class="validate" required>
+                                    <label for="categoryName">Nome da Categoria</label>
+                                </div>
+                                <div class="center-align">
+                                    <button type="submit" class="btn waves-effect waves-light blue darken-3">Adicionar Categoria</button>
+                                </div>
+                            </form>
+                            
+                            <div class="row">
+                                <div class="col s12">
+                                    <table class="striped responsive-table highlight">
+                                        <thead>
+                                            <tr>
+                                                <th>Categoria</th>
+                                                <th>Ações</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="categoryList">
+                                            <!-- Categorias serão carregadas aqui -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m10 offset-m1">
+                    <div class="card z-depth-2">
+                        <div class="card-content">
+                            <span class="card-title center-align blue-text text-darken-3">Produtos Cadastrados</span>
+                            <table class="striped responsive-table highlight">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Preço</th>
+                                        <th>Quantidade</th>
+                                        <th>Categoria</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productListAdmin">
+                                    <!-- Produtos serão carregados aqui -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="productCatalogSection" class="container">
+            <div class="row">
+                <div class="col s12 m10 offset-m1">
+                    <div class="card z-depth-2">
+                        <div class="card-content">
+                            <span class="card-title center-align blue-text text-darken-3">Catálogo de Produtos</span>
+                            <div class="row">
+                                <div class="input-field col s12 m6">
+                                    <i class="material-icons prefix">search</i>
+                                    <input type="text" id="searchProduct" class="validate" placeholder="Buscar produto...">
+                                    <label for="searchProduct">Buscar produto...</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <i class="material-icons prefix">filter_list</i>
+                                    <select id="filterCategory">
+                                        <option value="all">Todas as Categorias</option>
+                                    </select>
+                                    <label>Filtrar por Categoria</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="productListClient">
+                <!-- Produtos serão carregados aqui -->
+            </div>
+            <div class="fixed-action-btn">
+                <a id="viewCartButton" class="btn-floating btn-large blue darken-3 pulse">
+                    <i class="large material-icons">shopping_cart</i>
+                </a>
+            </div>
+        </section>
+    </main>
+    <div id="modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p id="modal-message"></p>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Modal/Sidebar -->
+    <div id="cartView" class="modal">
+        <div class="modal-content">
+            <h4>Seu Carrinho</h4>
+            <ul id="cartItemsList" class="collection">
+                <!-- Cart items will be rendered here -->
+            </ul>
+            <div class="divider"></div>
+            <h5 class="right-align">Total do Carrinho: <span id="cartTotalView">R$ 0.00</span></h5>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fechar</a>
+                <button id="checkoutButton" class="waves-effect waves-light btn blue darken-3">Finalizar Compra</button>
+            </div>
+        </div>
+    </div>
+    <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
