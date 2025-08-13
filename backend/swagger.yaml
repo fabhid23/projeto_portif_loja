@@ -1,0 +1,333 @@
+openapi: 3.0.0
+info:
+  title: Product Catalog API
+  version: 1.0.0
+  description: API REST para gerenciar um catálogo de produtos.
+servers:
+  - url: http://localhost:5002
+    description: Servidor Local
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID único do produto
+          example: 1
+        nome:
+          type: string
+          description: Nome do produto
+          example: "Laptop"
+        descricao:
+          type: string
+          description: Descrição detalhada do produto
+          example: "Laptop de alta performance com 16GB RAM"
+        preco:
+          type: number
+          format: float
+          description: Preço do produto
+          example: 1200.50
+        estoque:
+          type: integer
+          description: Quantidade em estoque
+          example: 50
+        categoria:
+          type: string
+          description: Categoria do produto
+          example: "Eletrônicos"
+      required:
+        - nome
+        - descricao
+        - preco
+        - estoque
+        - categoria
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: "admin"
+        password:
+          type: string
+          example: "admin_password"
+      required:
+        - username
+        - password
+    LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    SellRequest:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          description: Quantidade a ser vendida
+          example: 1
+      required:
+        - quantity
+
+paths:
+  /login:
+    post:
+      summary: Autentica um usuário e retorna um token JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login bem-sucedido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Credenciais inválidas
+
+  /produtos:
+    get:
+      summary: Lista todos os produtos ou filtra por nome
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Termo de busca para filtrar produtos por nome
+          example: "laptop"
+      responses:
+        '200':
+          description: Lista de produtos
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/Product'
+        '401':
+          description: Não autorizado
+    post:
+      summary: Cria um novo produto (apenas para administradores)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: Produto criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Dados inválidos
+        '401':
+          description: Não autorizado
+        '403':
+          description: Acesso negado (apenas administradores)
+
+  /produtos/{id}:
+    get:
+      summary: Retorna um produto específico pelo ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do produto
+      responses:
+        '200':
+          description: Detalhes do produto
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '401':
+          description: Não autorizado
+        '404':
+          description: Produto não encontrado
+
+  /categorias:
+    get:
+      summary: Lista todas as categorias de produtos
+      responses:
+        '200':
+          description: Lista de categorias
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+    post:
+      summary: Cria uma nova categoria (apenas para administradores)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  description: Nome da nova categoria
+                  example: "Livros"
+              required:
+                - nome
+      responses:
+        '201':
+          description: Categoria criada com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Categoria criada com sucesso!"
+        '400':
+          description: Dados inválidos ou categoria já existente
+        '401':
+          description: Não autorizado
+        '403':
+          description: Acesso negado (apenas administradores)
+    put:
+      summary: Atualiza um produto existente (apenas para administradores)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do produto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200':
+          description: Produto atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Dados inválidos
+        '401':
+          description: Não autorizado
+        '403':
+          description: Acesso negado (apenas administradores)
+        '404':
+          description: Produto não encontrado
+    delete:
+      summary: Exclui um produto (apenas para administradores)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do produto
+      responses:
+        '200':
+          description: Produto excluído com sucesso
+        '401':
+          description: Não autorizado
+        '403':
+          description: Acesso negado (apenas administradores)
+        '404':
+          description: Produto não encontrado
+
+  /produtos/categoria/{nome_categoria}:
+    get:
+      summary: Lista produtos por categoria
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: nome_categoria
+          required: true
+          schema:
+            type: string
+          description: Nome da categoria para filtrar produtos
+          example: "eletronicos"
+      responses:
+        '200':
+          description: Lista de produtos por categoria
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/Product'
+        '401':
+          description: Não autorizado
+
+  /produtos/{id}/vender:
+    post:
+      summary: Diminui o estoque de um produto (para administradores e clientes)
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID do produto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SellRequest'
+      responses:
+        '200':
+          description: Produto vendido com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Product sold successfully"
+                  new_stock:
+                    type: integer
+                    example: 49
+        '400':
+          description: Quantidade inválida ou estoque insuficiente
+        '401':
+          description: Não autorizado
+        '403':
+          description: Acesso negado
+        '404':
+          description: Produto não encontrado

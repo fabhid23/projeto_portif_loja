@@ -1,0 +1,314 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Estilos gerais */
+
+@media (max-width: 992px) {
+    main {
+        margin: 10px;
+        padding: 10px;
+    }
+
+    section {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    nav .brand-logo {
+        left: 10px !important;
+        transform: none !important;
+    }
+
+    nav ul {
+        display: none;
+    }
+
+    .modal-content {
+        width: 95% !important;
+        height: 95% !important;
+    }
+
+    .card .card-content {
+        padding: 15px;
+    }
+
+    .card .card-action {
+        padding: 10px;
+    }
+
+    .input-field label {
+        font-size: 0.9em;
+    }
+
+    .btn, .btn-small, .btn-floating {
+        font-size: 0.8em;
+        padding: 0 10px;
+    }
+
+    .btn-floating.btn-large {
+        width: 45px;
+        height: 45px;
+    }
+
+    .btn-floating.btn-large i {
+        line-height: 45px;
+    }
+
+    #cartTotal {
+        display: block;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    #loginButton, #logoutButton {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    #welcomeMessage {
+        display: block;
+        text-align: center;
+    }
+
+    .fixed-action-btn {
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+#productListClient {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Ensure it's on top of everything */
+    left: 0;
+    top: 0;
+    width: 100vw; /* Use viewport width */
+    height: 100vh; /* Use viewport height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.9); /* Darker black w/ opacity */
+    padding-top: 0;
+    transform: none;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%; /* Could be more or less, depending on screen size */
+    max-width: 800px;
+    background-color: #fefefe;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 90%;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1em 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav ul li a.btn {
+    background-color: #1565c0; /* MaterializeCSS blue darken-3 */
+    color: white;
+    padding: 0 15px; /* Materialize default padding for buttons */
+    margin: 0;
+    display: block; /* Make it block to fill the li */
+}
+
+nav button {
+    background-color: #5cb85c;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+nav button:hover {
+    background-color: #4cae4c;
+}
+
+nav ul li {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    background-color: #1565c0; /* MaterializeCSS blue darken-3 */
+}
+
+nav ul li a {
+    padding: 0;
+    margin: 0;
+}
+
+main {
+    padding: 20px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+section {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+h2 {
+    color: #333;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #fff;
+    border: 1px solid #eee;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ul li button {
+    background-color: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+ul li button:hover {
+    background-color: #c82333;
+}
+
+.product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.product-info {
+    flex-grow: 1;
+}
+
+.product-actions {
+    margin-bottom: 20px; /* Adiciona espaço entre os cards */
+}
+
+#productListClient .col {
+    margin-bottom: 20px; /* Adiciona espaço entre os cards */
+}
+.product-actions button.buy-btn {
+    background-color: #28a745;
+}
+
+.product-actions button.buy-btn:hover {
+    background-color: #218838;
+}
+
+#welcomeMessage {
+    color: #fff;
+    font-weight: bold;
+}
+
+#searchProduct, #filterCategory {
+    width: calc(50% - 10px);
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#applyFilter {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 600px) {
+    #searchProduct, #filterCategory {
+        width: 100%;
+        margin-right: 0;
+    }
+}
