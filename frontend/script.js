@@ -5,9 +5,7 @@ let token = null;
 let userRole = null;
 
 // Elementos do DOM
-const modal = document.getElementById('modal');
-const modalMessage = document.getElementById('modal-message');
-const closeBtn = document.getElementsByClassName('close-btn')[0];
+
 const loginSection = document.getElementById('loginSection');
 const productManagement = document.getElementById('productManagementSection');
 const productCatalog = document.getElementById('productCatalogSection');
@@ -31,22 +29,10 @@ let cart = [];
 // Funções de UI
 // Funções do Modal
 function showModal(message) {
-    modalMessage.textContent = message;
-    modal.style.display = 'block';
-    setTimeout(() => {
-        modal.style.display = 'none';
-    }, 3000); // O modal desaparecerá após 3 segundos (3000 milissegundos)
+    M.toast({html: message, displayLength: 3000});
 }
 
-closeBtn.onclick = function() {
-    modal.style.display = 'none';
-}
 
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-}
 
 // Funções de UI
 function updateUI() {
@@ -138,9 +124,8 @@ function displayProducts(products) {
                 <div class="card-action">
                     <div class="input-field inline" style="width: 80px; margin-right: 10px;">
                         <button class="btn-floating btn-small waves-effect waves-light blue darken-3 quantity-minus" data-product-id="${product.id}">-</button>
-                        <input type="number" id="quantity-${product.id}" value="1" min="1" class="validate center-align" style="width: 40px;" readonly>
+                        <input type="number" id="quantity-${product.id}" value="1" min="1" class="validate center-align quantity-input" data-product-id="${product.id}" data-product-stock="${product.estoque}" style="width: 40px;" placeholder="Qtd">
                         <button class="btn-floating btn-small waves-effect waves-light blue darken-3 quantity-plus" data-product-id="${product.id}" data-product-stock="${product.estoque}">+</button>
-                        <label for="quantity-${product.id}">Qtd</label>
                     </div>
                     <button class="btn waves-effect waves-light blue darken-3 add-to-cart" data-product-id="${product.id}" data-product-name="${product.nome}" data-product-price="${product.preco}" data-product-stock="${product.estoque}">Adicionar ao Carrinho</button>
                 </div>
@@ -148,7 +133,46 @@ function displayProducts(products) {
         `;
         productListClient.appendChild(col);
     });
+
 }
+
+// Event listener para delegação de eventos nos botões de quantidade e input (adicionado uma única vez)
+productListClient.addEventListener('click', function(event) {
+    if (event.target.classList.contains('quantity-minus')) {
+        event.stopPropagation();
+            const productId = event.target.dataset.productId;
+            const quantityInput = document.getElementById(`quantity-${productId}`);
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+    } else if (event.target.classList.contains('quantity-plus')) {
+        event.stopPropagation();
+            const productId = event.target.dataset.productId;
+            const productStock = parseInt(event.target.dataset.productStock);
+            const quantityInput = document.getElementById(`quantity-${productId}`);
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue < productStock) {
+                quantityInput.value = currentValue + 1;
+            } else {
+                showModal('Estoque máximo atingido!');
+            }
+    }
+});
+
+productListClient.addEventListener('change', function(event) {
+    if (event.target.classList.contains('quantity-input')) {
+        const productStock = parseInt(event.target.dataset.productStock);
+        let currentValue = parseInt(event.target.value);
+
+        if (isNaN(currentValue) || currentValue < 1) {
+            event.target.value = 1;
+        } else if (currentValue > productStock) {
+            event.target.value = productStock;
+            showModal('Estoque máximo atingido!');
+        }
+    }
+});
 
 async function fetchCategories() {
      try {
@@ -615,6 +639,9 @@ async function editProduct(id) {
             document.getElementById('productId').value = product.id;
 
             productForm.setAttribute('data-product-id', product.id);
+            M.updateTextFields(); // Adiciona esta linha para atualizar os campos do Materialize
+            // Re-initialize select for category to show selected value
+            M.FormSelect.init(document.getElementById('productCategory'));
             showModal('Formulário preenchido para edição. Altere os campos e clique em Salvar Produto.');
         } else {
             showModal(product.message || 'Erro ao buscar produto para edição.');
@@ -686,5 +713,4 @@ async function sellProduct(id, quantity) {
     }
 }
 
-// Inicialização
-updateUI();
+// InicializaçãoupdateUI();
