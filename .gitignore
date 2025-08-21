@@ -16,3 +16,8 @@ build/
 dist/
 
 reports/
+=======
+cypress/screenshots/
+cypress/reports/
+.env
+

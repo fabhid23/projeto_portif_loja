@@ -98,6 +98,7 @@ function displayProducts(products) {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${product.nome}</td>
+            <td>${product.descricao}</td>
             <td>${product.preco.toFixed(2)}</td>
             <td>${product.estoque}</td>
             <td>${product.categoria}</td>
@@ -216,9 +217,21 @@ async function fetchCategories() {
             const option = document.createElement('option');
             option.value = category;
             option.textContent = category;
+            option.setAttribute('data-cy', `category-option-${category.toLowerCase().replace(/\s+/g, '-')}`);
             productCategorySelect.appendChild(option);
         });
         M.FormSelect.init(productCategorySelect); // Re-initialize Materialize select
+        
+        // Adicionar data-cy aos elementos li do dropdown gerados pelo Materialize
+        setTimeout(() => {
+            const dropdownItems = document.querySelectorAll('.dropdown-content li');
+            dropdownItems.forEach(item => {
+                const categoryText = item.textContent.trim();
+                if (categoryText && categories.includes(categoryText)) {
+                    item.setAttribute('data-cy', `category-option-${categoryText.toLowerCase().replace(/\s+/g, '-')}`);
+                }
+            });
+        }, 100); // Pequeno atraso para garantir que o Materialize tenha criado os elementos
 
         // Display categories in the management section
         displayCategories(categories);
