@@ -65,4 +65,3 @@ O projeto inclui uma pasta `DocumentosDeTeste/` com os seguintes documentos:
 - **Caso de Teste - Exemplo - loja.docx**: Um exemplo de caso de teste detalhado para a aplicação.
 - **Plano e Estratégia de Testes loja.docx**: Documento que descreve o plano geral e a estratégia adotada para os testes do projeto.
 - **Relatório de Sessão - loja.docx**: Um relatório de sessão de testes, registrando as atividades e resultados de uma sessão de teste exploratório ou formal.
->>>>>>> Stashed changes
