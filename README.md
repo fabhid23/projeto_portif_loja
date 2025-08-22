@@ -170,6 +170,9 @@ Os requisitos, user stories e epics estão documentados no Wiki do projeto (http
 
 Exemplos de Bugs Conhecidos 
 (Issues) (https://github.com/fabhid23/projeto_portif_loja/issues) <mcreference link="https://github.com/fabhid23/projeto_portif_loja/issues"></mcreference>
+
+Github Actions - Toda vez que tem atualização no projeto, a pipeline roda para validar os testes automatizados em cypress 
+(https://github.com/fabhid23/projeto_portif_loja/actions) <mcreference link="https://github.com/fabhid23/projeto_portif_loja/actions"></mcreference>
 =======
 
 - A API utiliza autenticação JWT para proteger suas rotas.
