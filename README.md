@@ -152,7 +152,7 @@ PORT=3000
 
 Este projeto possui um repositório dedicado para testes de performance, que utiliza a ferramenta k6. Você pode encontrar mais detalhes e instruções de execução no seguinte link:
 
-- [Repositório de Testes de Performance](https://github.com/fabhid23/porti_loja_performance) <mcreference link="https://github.com/fabhid23/porti_loja_performance" index="0">0</mcreference>
+- [Repositório de Testes de Performance](https://github.com/fabhid23/porti_loja_performance) <mcreference link="https://github.com/fabhid23/porti_loja_performance"></mcreference>
 
 Para que os testes de performance funcionem corretamente, é necessário que este projeto (`projeto_portif_loja`) esteja em execução localmente, conforme as instruções de "Como Executar o Projeto".
 
@@ -166,7 +166,7 @@ O projeto inclui uma pasta `DocumentosDeTeste/` com os seguintes documentos:
 
 =======
 Requisitos, User Story e Epic
-Os requisitos, user stories e epics estão documentados no Wiki do projeto.
+Os requisitos, user stories e epics estão documentados no Wiki do projeto <mcreference link="https://github.com/fabhid23/projeto_portif_loja/wiki"></mcreference>.
 
 Exemplos de Bugs Conhecidos (Issues)
 =======
