@@ -18,14 +18,27 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Install dependencies
+    - name: Install backend dependencies
       run: npm install
+      working-directory: ./backend
 
-    - name: Start application in background
+    - name: Install frontend dependencies
+      run: npm install
+      working-directory: ./frontend
+
+    - name: Start backend in background
       run: npm start &
+      working-directory: ./backend
 
-    - name: Wait for application to start
+    - name: Start frontend in background
+      run: npm start &
+      working-directory: ./frontend
+
+    - name: Wait for applications to start
       run: sleep 10
 
-    - name: Run tests
+    - name: Install Cypress dependencies
+      run: npm install cypress --save-dev
+
+    - name: Run Cypress tests
       run: npx cypress run
