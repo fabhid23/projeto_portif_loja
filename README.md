@@ -173,6 +173,8 @@ Exemplos de Bugs Conhecidos
 
 Github Actions - Toda vez que tem atualização no projeto, a pipeline roda para validar os testes automatizados em cypress 
 (https://github.com/fabhid23/projeto_portif_loja/actions) <mcreference link="https://github.com/fabhid23/projeto_portif_loja/actions"></mcreference>
+
+Documntação Swagger
 =======
 
 - A API utiliza autenticação JWT para proteger suas rotas.
