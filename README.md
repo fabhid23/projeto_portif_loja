@@ -126,6 +126,19 @@ Para facilitar os testes e a exploração da aplicação, os seguintes usuários
 - **Client:** username: `client`, password: `client_password`
 
 ## Informações Importantes
+
+### Configuração de Variáveis de Ambiente (.env)
+Para o correto funcionamento da aplicação, é necessário criar um arquivo `.env` na raiz do diretório `backend/` com as seguintes variáveis:
+
+Exemplo:
+```
+BASE_URL=http://localhost:3000
+PORT=3000
+```
+- `BASE_URL`: URL base do frontend. (Ex: `http://localhost:3000`)
+- `PORT`: Porta em que o servidor backend será executado. (Ex: `5002`)
+
+
 - A API utiliza autenticação JWT
 - O frontend faz requisições para a API em `http://localhost:5002`
 - Documentação da API disponível em `http://localhost:5002/api-docs`
