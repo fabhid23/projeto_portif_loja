@@ -166,9 +166,10 @@ O projeto inclui uma pasta `DocumentosDeTeste/` com os seguintes documentos:
 
 =======
 Requisitos, User Story e Epic
-Os requisitos, user stories e epics estão documentados no Wiki do projeto <mcreference link="https://github.com/fabhid23/projeto_portif_loja/wiki"></mcreference>.
+Os requisitos, user stories e epics estão documentados no Wiki do projeto (https://github.com/fabhid23/projeto_portif_loja/wiki) <mcreference link="https://github.com/fabhid23/projeto_portif_loja/wiki"></mcreference>.
 
-Exemplos de Bugs Conhecidos (Issues)
+Exemplos de Bugs Conhecidos 
+(Issues) (https://github.com/fabhid23/projeto_portif_loja/issues) <mcreference link="https://github.com/fabhid23/projeto_portif_loja/issues"></mcreference>
 =======
 
 - A API utiliza autenticação JWT para proteger suas rotas.
